@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <Reference Include="PowerService">
-        <HintPath>ExternalLibraries/PowerService/netstandard2.0/PowerService.dll</HintPath>
+        <HintPath>../../lib/PowerService/netstandard2.0/PowerService.dll</HintPath>
     </Reference>
 </ItemGroup>
 

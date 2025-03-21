@@ -11,12 +11,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AxpoChallenge.Domain\AxpoChallenge.Domain.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\AxpoChallenge.Application\AxpoChallenge.Application.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AxpoChallenge.Infrastructures\AxpoChallenge.Infrastructure.csproj" />
+    <ProjectReference Include="..\AxpoChallenge.Infrastructure\AxpoChallenge.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
