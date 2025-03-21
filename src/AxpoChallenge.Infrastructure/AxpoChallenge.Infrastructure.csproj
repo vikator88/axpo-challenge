@@ -6,4 +6,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AxpoChallenge.Domain\AxpoChallenge.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AxpoChallenge.Application\AxpoChallenge.Application.csproj" />
+  </ItemGroup>
+  
+
+  <ItemGroup>
+    <Reference Include="PowerService">
+        <HintPath>ExternalLibraries/PowerService/netstandard2.0/PowerService.dll</HintPath>
+    </Reference>
+</ItemGroup>
+
 </Project>
