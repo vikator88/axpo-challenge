@@ -5,12 +5,12 @@ namespace AxpoChallenge.Infrastructure.Mapping;
 
 public static class PowerPeriodMapper
 {
-    public static PowerPeriodDomain MapToDomain(PowerPeriod externalPeriod)
+    public static PowerPeriodValueObject MapToDomain(PowerPeriod externalPeriod)
     {
-        return new PowerPeriodDomain(externalPeriod.Period, externalPeriod.Volume);
+        return new PowerPeriodValueObject(externalPeriod.Period, externalPeriod.Volume);
     }
 
-    public static IEnumerable<PowerPeriodDomain> MapToDomain(
+    public static IEnumerable<PowerPeriodValueObject> MapToDomain(
         IEnumerable<PowerPeriod> externalPeriods
     )
     {

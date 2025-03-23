@@ -2,9 +2,9 @@ using AxpoChallenge.Domain.ValueObjects;
 
 namespace AxpoChallenge.Domain.Entities
 {
-    public sealed class PowerTradeDomain
+    public sealed class PowerTradeEntity
     {
-        public PowerTradeDomain(string tradeId, DateTime date, PowerPeriodDomain[] periods)
+        public PowerTradeEntity(string tradeId, DateTime date, PowerPeriodValueObject[] periods)
         {
             TradeId = tradeId;
             Date = date;
@@ -13,6 +13,6 @@ namespace AxpoChallenge.Domain.Entities
 
         public string TradeId { get; }
         public DateTime Date { get; }
-        public PowerPeriodDomain[] Periods { get; }
+        public PowerPeriodValueObject[] Periods { get; }
     }
 }

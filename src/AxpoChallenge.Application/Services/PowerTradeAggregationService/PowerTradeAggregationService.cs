@@ -15,7 +15,7 @@ namespace AxpoChallenge.Application.Services
         }
 
         public IEnumerable<AggregatedPowerPosition> AggregateTrades(
-            IEnumerable<PowerTradeDomain> powerTrades
+            IEnumerable<PowerTradeEntity> powerTrades
         )
         {
             // Check if all power trades are for the same date
@@ -53,9 +53,9 @@ namespace AxpoChallenge.Application.Services
 
             var aggregatedPositions = new Dictionary<int, AggregatedPowerPosition>();
 
-            foreach (PowerTradeDomain trade in powerTrades)
+            foreach (PowerTradeEntity trade in powerTrades)
             {
-                foreach (PowerPeriodDomain period in trade.Periods)
+                foreach (PowerPeriodValueObject period in trade.Periods)
                 {
                     // Starting from local date 00:00 (but already converted to UTC), each period is 1 hour long.
                     DateTime currentPeriodDateTimeUtc = dateTimeUtcBase.AddHours(period.Id - 1); // Period Id is 1-based.

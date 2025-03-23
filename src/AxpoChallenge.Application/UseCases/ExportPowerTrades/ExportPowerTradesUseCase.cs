@@ -28,7 +28,7 @@ public class ExportPowerTradesUseCase : IExportPowerTradesUseCase
         DateTime executionTimeUtc = DateTime.UtcNow;
 
         // Get power trades for the given date
-        IEnumerable<PowerTradeDomain> powerTrades =
+        IEnumerable<PowerTradeEntity> powerTrades =
             await _powerTradeRepository.GetTradesByDateAsync(date);
 
         // Aggregate power trades

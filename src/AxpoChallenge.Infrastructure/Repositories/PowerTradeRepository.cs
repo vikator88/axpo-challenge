@@ -18,7 +18,7 @@ public class PowerTradeRepository : IPowerTradeRepository
         _logger = logger;
     }
 
-    public async Task<IEnumerable<PowerTradeDomain>> GetTradesByDateAsync(DateTime date)
+    public async Task<IEnumerable<PowerTradeEntity>> GetTradesByDateAsync(DateTime date)
     {
         _logger.LogInformation($"Getting trades for date: {date:dd/MM/yyyy}");
         // Retry policy for handling PowerServiceException error implemented with Polly

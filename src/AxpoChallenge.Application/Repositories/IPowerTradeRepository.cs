@@ -9,5 +9,5 @@ public interface IPowerTradeRepository
     /// </summary>
     /// <param name="date"></param>
     /// <returns></returns>
-    Task<IEnumerable<PowerTradeDomain>> GetTradesByDateAsync(DateTime date);
+    Task<IEnumerable<PowerTradeEntity>> GetTradesByDateAsync(DateTime date);
 }

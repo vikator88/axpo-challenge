@@ -4,5 +4,5 @@ namespace AxpoChallenge.Application.Services;
 
 public interface IPowerTradeAggregationService
 {
-    IEnumerable<AggregatedPowerPosition> AggregateTrades(IEnumerable<PowerTradeDomain> trades);
+    IEnumerable<AggregatedPowerPosition> AggregateTrades(IEnumerable<PowerTradeEntity> trades);
 }

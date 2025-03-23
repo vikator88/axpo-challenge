@@ -5,9 +5,9 @@ namespace AxpoChallenge.Infrastructure.Mapping;
 
 public static class PowerTradeMapper
 {
-    public static PowerTradeDomain MapToDomain(PowerTrade externalTrade)
+    public static PowerTradeEntity MapToDomain(PowerTrade externalTrade)
     {
-        PowerTradeDomain mappedPowerTrade = new PowerTradeDomain(
+        PowerTradeEntity mappedPowerTrade = new PowerTradeEntity(
             externalTrade.TradeId,
             externalTrade.Date,
             PowerPeriodMapper.MapToDomain(externalTrade.Periods).ToArray() // Mapping the periods
@@ -16,7 +16,7 @@ public static class PowerTradeMapper
         return mappedPowerTrade;
     }
 
-    public static IEnumerable<PowerTradeDomain> MapToDomain(IEnumerable<PowerTrade> externalTrades)
+    public static IEnumerable<PowerTradeEntity> MapToDomain(IEnumerable<PowerTrade> externalTrades)
     {
         return externalTrades.Select(t => MapToDomain(t));
     }
