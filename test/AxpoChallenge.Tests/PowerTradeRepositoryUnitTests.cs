@@ -61,7 +61,7 @@ public class PowerTradeRepositoryUnitTests
         /***********/
 
         // Call method GetTradesByDateAsync from repository
-        IEnumerable<PowerTradeDomain> result = await _powerTradeRepository.GetTradesByDateAsync(
+        IEnumerable<PowerTradeEntity> result = await _powerTradeRepository.GetTradesByDateAsync(
             testDate
         );
 
@@ -76,7 +76,7 @@ public class PowerTradeRepositoryUnitTests
         Assert.IsNotNull(result);
 
         // Verify that the result is of type IEnumerable<PowerTradeDomain>
-        Assert.IsInstanceOf<IEnumerable<PowerTradeDomain>>(result);
+        Assert.IsInstanceOf<IEnumerable<PowerTradeEntity>>(result);
 
         // Verify that the result contains the same number of trades as the mock trades
         Assert.That(result.Count(), Is.EqualTo(mockTrades.Count));
@@ -114,7 +114,7 @@ public class PowerTradeRepositoryUnitTests
         /***********/
 
         // Call method GetTradesByDateAsync from repository
-        IEnumerable<PowerTradeDomain> result = await _powerTradeRepository.GetTradesByDateAsync(
+        IEnumerable<PowerTradeEntity> result = await _powerTradeRepository.GetTradesByDateAsync(
             testDate
         );
 
@@ -129,7 +129,7 @@ public class PowerTradeRepositoryUnitTests
         Assert.IsNotNull(result);
 
         // Verify that the result is of type IEnumerable<PowerTradeDomain>
-        Assert.IsInstanceOf<IEnumerable<PowerTradeDomain>>(result);
+        Assert.IsInstanceOf<IEnumerable<PowerTradeEntity>>(result);
 
         // Verify that the result is an empty list
         Assert.That(result.Count(), Is.EqualTo(0));

@@ -34,7 +34,7 @@ public class PowerTradeRepositoryIntegrationTests
         /*   ACT   */
         /***********/
 
-        IEnumerable<PowerTradeDomain> result = await _powerTradeRepository.GetTradesByDateAsync(
+        IEnumerable<PowerTradeEntity> result = await _powerTradeRepository.GetTradesByDateAsync(
             date
         );
 

@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Axpo;
+using AxpoChallenge.Application.Configuration;
 using AxpoChallenge.Application.Services;
 using AxpoChallenge.Domain.Entities;
 using AxpoChallenge.Infrastructure.Configuration.CommandLineParser;
@@ -14,6 +15,8 @@ public class PowerTradeAggregationServiceIntegrationTests
 {
     private PowerTradeRepository _powerTradeRepository;
 
+    private IAxpoChallengeOptions options;
+
     [SetUp]
     public void SetUp()
     {
@@ -22,6 +25,52 @@ public class PowerTradeAggregationServiceIntegrationTests
 
         // Create instance of PowerTradeRepository with the actual service as dependency
         _powerTradeRepository = new PowerTradeRepository(new PowerService(), logger);
+
+        // create test options
+        options = new CommandLineOptionsDTOBuilder()
+            .WithExecutionIntervalMinutes(1)
+            .WithCsvOutputFolder(Directory.GetCurrentDirectory())
+            .WithTimeZone("Central European Standard Time")
+            .Build();
+    }
+
+    [Test]
+    public async Task AggregateTrades_ShouldReturnAggregatedPowerPositions()
+    {
+        /***********/
+        /* ARRANGE */
+        /***********/
+
+        // Create a new instance of the service
+        var service = new PowerTradeAggregationService(options);
+
+        var date = new DateTime(2024, 10, 27);
+
+        /***********/
+        /*   ACT   */
+        /***********/
+
+        IEnumerable<PowerTradeEntity> _powerTrades =
+            await _powerTradeRepository.GetTradesByDateAsync(date);
+
+        IEnumerable<AggregatedPowerPosition> aggregatedTrades = service.AggregateTrades(
+            _powerTrades
+        );
+
+        /***********/
+        /*  ASSERT */
+        /***********/
+        Assert.That(aggregatedTrades, Is.Not.Null);
+        Assert.That(aggregatedTrades.Count(), Is.EqualTo(_powerTrades.First().Periods.Length));
+
+        // Verify that the aggregated trades have the correct volume
+        for (int i = 0; i < _powerTrades.First().Periods.Length; i++)
+        {
+            Assert.That(
+                aggregatedTrades.ElementAt(i).Volume,
+                Is.EqualTo(_powerTrades.Sum(x => x.Periods[i].Volume))
+            );
+        }
     }
 
     [Test]
@@ -30,12 +79,6 @@ public class PowerTradeAggregationServiceIntegrationTests
         /***********/
         /* ARRANGE */
         /***********/
-        // Define AxpoChallengeOptions to run the service
-        CommandLineOptionsDTO options = new CommandLineOptionsDTOBuilder()
-            .WithExecutionIntervalMinutes(1)
-            .WithCsvOutputFolder(Directory.GetCurrentDirectory())
-            .WithTimeZone("Central European Standard Time")
-            .Build();
 
         // Create a test date for checking winter daylight saving time
         var date1 = new DateTime(2024, 10, 27);
@@ -45,10 +88,10 @@ public class PowerTradeAggregationServiceIntegrationTests
         /*   ACT   */
         /***********/
 
-        Task<IEnumerable<PowerTradeDomain>> result1 = _powerTradeRepository.GetTradesByDateAsync(
+        Task<IEnumerable<PowerTradeEntity>> result1 = _powerTradeRepository.GetTradesByDateAsync(
             date1
         );
-        Task<IEnumerable<PowerTradeDomain>> result2 = _powerTradeRepository.GetTradesByDateAsync(
+        Task<IEnumerable<PowerTradeEntity>> result2 = _powerTradeRepository.GetTradesByDateAsync(
             date2
         );
 
@@ -109,10 +152,10 @@ public class PowerTradeAggregationServiceIntegrationTests
         /*   ACT   */
         /***********/
 
-        Task<IEnumerable<PowerTradeDomain>> result1 = _powerTradeRepository.GetTradesByDateAsync(
+        Task<IEnumerable<PowerTradeEntity>> result1 = _powerTradeRepository.GetTradesByDateAsync(
             date1
         );
-        Task<IEnumerable<PowerTradeDomain>> result2 = _powerTradeRepository.GetTradesByDateAsync(
+        Task<IEnumerable<PowerTradeEntity>> result2 = _powerTradeRepository.GetTradesByDateAsync(
             date2
         );
 
