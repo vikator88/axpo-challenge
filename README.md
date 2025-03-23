@@ -85,11 +85,11 @@ The code itself contains a commented-out implementation of the loop in a blockin
 
 Why is the first option (background task) better?
 
-1.  Avoids blocking the loop: In the first option, if the use case takes longer than the interval, the next execution will be delayed.
+1.  Avoids blocking the loop: In the secon option, if the use case takes longer than the interval, the next execution will be delayed.
 
     - This can cause drift and prevent timely executions.
 
-2.  Ensures periodic execution: The second option always triggers the execution at the correct interval, even if the previous one is still running.
+2.  Ensures periodic execution: The first option always triggers the execution at the correct interval, even if the previous one is still running.
 
 3.  Parallel execution: If needed, multiple executions can overlap without delaying the next scheduled run.
 
