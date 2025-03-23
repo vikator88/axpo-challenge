@@ -1,5 +1,8 @@
 using Axpo;
-using AxpoChallenge.Infrastructure;
+using AxpoChallenge.Domain.Entities;
+using AxpoChallenge.Infrastructure.Repositories;
+using Microsoft.Extensions.Logging;
+using Moq;
 
 namespace AxpoChallenge.Tests;
 
@@ -11,8 +14,10 @@ public class PowerTradeRepositoryIntegrationTests
     [SetUp]
     public void SetUp()
     {
+        // Mock the logger
+        var logger = new Mock<ILogger<PowerTradeRepository>>().Object;
         // Create instance of PowerTradeRepository with the actual service as dependency
-        _powerTradeRepository = new PowerTradeRepository(new PowerService());
+        _powerTradeRepository = new PowerTradeRepository(new PowerService(), logger);
     }
 
     [Test]
@@ -23,13 +28,15 @@ public class PowerTradeRepositoryIntegrationTests
         /***********/
 
         // Create a test date
-        var date = new DateTime(2025, 3, 21);
+        var date = new DateTime(2025, 3, 31);
 
         /***********/
         /*   ACT   */
         /***********/
 
-        var result = await _powerTradeRepository.GetTradesByDateAsync(date);
+        IEnumerable<PowerTradeDomain> result = await _powerTradeRepository.GetTradesByDateAsync(
+            date
+        );
 
         /************/
         /*  ASSERT  */

@@ -1,7 +1,7 @@
-using System.Runtime.InteropServices;
 using Axpo;
 using AxpoChallenge.Domain.Entities;
-using AxpoChallenge.Infrastructure;
+using AxpoChallenge.Infrastructure.Repositories;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace AxpoChallenge.Tests;
@@ -18,8 +18,11 @@ public class PowerTradeRepositoryUnitTests
         // Create mock for IPowerService
         _mockPowerService = new Mock<IPowerService>();
 
+        // Mock the logger
+        var logger = new Mock<ILogger<PowerTradeRepository>>().Object;
+
         // Create instance of PowerTradeRepository with the mock as dependency
-        _powerTradeRepository = new PowerTradeRepository(_mockPowerService.Object);
+        _powerTradeRepository = new PowerTradeRepository(_mockPowerService.Object, logger);
     }
 
     [Test]
@@ -40,7 +43,7 @@ public class PowerTradeRepositoryUnitTests
         };
 
         // Fill the mock trades with some data
-        foreach (var trade in mockTrades)
+        foreach (PowerTrade trade in mockTrades)
         {
             for (int i = 0; i < trade.Periods.Length; i++)
             {
@@ -58,7 +61,9 @@ public class PowerTradeRepositoryUnitTests
         /***********/
 
         // Call method GetTradesByDateAsync from repository
-        var result = await _powerTradeRepository.GetTradesByDateAsync(testDate);
+        IEnumerable<PowerTradeDomain> result = await _powerTradeRepository.GetTradesByDateAsync(
+            testDate
+        );
 
         /************/
         /*  ASSERT  */
@@ -109,7 +114,9 @@ public class PowerTradeRepositoryUnitTests
         /***********/
 
         // Call method GetTradesByDateAsync from repository
-        var result = await _powerTradeRepository.GetTradesByDateAsync(testDate);
+        IEnumerable<PowerTradeDomain> result = await _powerTradeRepository.GetTradesByDateAsync(
+            testDate
+        );
 
         /************/
         /*  ASSERT  */

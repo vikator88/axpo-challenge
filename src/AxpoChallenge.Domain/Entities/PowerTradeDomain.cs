@@ -1,3 +1,5 @@
+using AxpoChallenge.Domain.ValueObjects;
+
 namespace AxpoChallenge.Domain.Entities
 {
     public sealed class PowerTradeDomain

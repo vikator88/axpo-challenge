@@ -1,5 +1,5 @@
 using Axpo;
-using AxpoChallenge.Domain.Entities;
+using AxpoChallenge.Domain.ValueObjects;
 
 namespace AxpoChallenge.Infrastructure.Mapping;
 
