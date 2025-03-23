@@ -98,6 +98,18 @@ Why is the first option (background task) better?
 The main risk is that if a task takes too long, multiple executions could overlap, leading to resource contention or performance issues.
 For this challenge, it won't be a problem because it only uses two resources: an API to fetch data and a CSV file to write the results with different names, depending on the time it was executed, so there will not be any data overwriting issues.
 
+## Retry policy
+
+The Polly library has been used to handle retries in case of temporary failures in the PowerService or when saving the CSV to disk (for example, if the disk runs out of space momentarily).
+
+In both cases, an exponential backoff retry policy has been defined. This is useful because it helps to avoid overwhelming the service or disk with immediate repeated requests, providing time for the temporary issue to resolve itself before trying again. The policy attempts up to three retries, at 2, 4, and 8 seconds intervals.
+
+If the error persists after these three retries, the execution stops. However, the program continues running because the use case is launched as task without blocking the main loop.
+
+Once the errors stop occurring, the system will resume normal operation.
+
+For this challenge, a recovery policy for iterations that do not finish after more than three failures has not been implemented. If a recovery system were required for these tasks, we could create a queue of unfinished tasks with the necessary parameters for their correct execution (for example, saving the DateTime when the task was supposed to run, so the CSV can be generated with the correct name).
+
 ## Logging System
 
 The solution uses **console logging** to provide feedback on the application's execution.
@@ -111,7 +123,7 @@ The solution uses **console logging** to provide feedback on the application's e
 To run the application, execute the following command in the terminal:
 
 ```bash
-dotnet restore
+dotnet test
 ```
 
 I have implemented both integration tests and unit tests.
