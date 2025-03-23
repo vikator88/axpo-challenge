@@ -110,6 +110,18 @@ Once the errors stop occurring, the system will resume normal operation.
 
 For this challenge, a recovery policy for iterations that do not finish after more than three failures has not been implemented. If a recovery system were required for these tasks, we could create a queue of unfinished tasks with the necessary parameters for their correct execution (for example, saving the DateTime when the task was supposed to run, so the CSV can be generated with the correct name).
 
+## Avoiding daylight saving time issues
+
+To avoid issues on daylight saving time (DST) transition days, we convert the base local time (00:00 of the target day) to UTC and then add the periods based on the UTC time.
+
+This approach ensures that on DST transition days, the export correctly includes either 23 or 25 periods, depending on the case.
+
+It will always work because the time change in the required timezone (Berlin) happens at either 2:00 or 3:00 AM.
+
+In general, this method will work for any timezone that does not apply the DST shift at exactly 00:00 local time, as that’s the base time we use for the conversion.
+
+However, this method has not been tested for timezones with non-integer UTC offsets, so its behavior in those cases is uncertain.
+
 ## Logging System
 
 The solution uses **console logging** to provide feedback on the application's execution.
@@ -130,7 +142,7 @@ Performance measurement has been included in the three basic actions of the use 
 
 ## Tests
 
-To run the application, execute the following command in the terminal:
+To run the tests, execute the following command in the terminal:
 
 ```bash
 dotnet test
