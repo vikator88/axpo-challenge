@@ -10,16 +10,19 @@ public class ExportPowerTradesUseCase : IExportPowerTradesUseCase
     private readonly IPowerTradeRepository _powerTradeRepository;
     private readonly ICsvExportService _csvExportService;
     private readonly IPowerTradeAggregationService _powerTradeAggregationService;
+    private readonly IPerformanceLoggingService _performanceLoggingService;
 
     public ExportPowerTradesUseCase(
         IPowerTradeRepository powerTradeRepository,
         ICsvExportService csvExportService,
-        IPowerTradeAggregationService powerTradeAggregationService
+        IPowerTradeAggregationService powerTradeAggregationService,
+        IPerformanceLoggingService performanceLoggingService
     )
     {
         _powerTradeRepository = powerTradeRepository;
         _csvExportService = csvExportService;
         _powerTradeAggregationService = powerTradeAggregationService;
+        _performanceLoggingService = performanceLoggingService;
     }
 
     public async Task ExecuteAsync(DateTime date, string destinationFolder)
@@ -29,17 +32,26 @@ public class ExportPowerTradesUseCase : IExportPowerTradesUseCase
 
         // Get power trades for the given date
         IEnumerable<PowerTradeEntity> powerTrades =
-            await _powerTradeRepository.GetTradesByDateAsync(date);
+            await _performanceLoggingService.LogExecutionTimeAsync(
+                () => _powerTradeRepository.GetTradesByDateAsync(date),
+                "GetTradesByDateAsync"
+            );
 
         // Aggregate power trades
         IEnumerable<AggregatedPowerPosition> aggregatedPowerTrades =
-            _powerTradeAggregationService.AggregateTrades(powerTrades);
+            _performanceLoggingService.LogExecutionTime(
+                () => _powerTradeAggregationService.AggregateTrades(powerTrades),
+                "AggregateTrades"
+            );
 
         // Create the destination path for the CSV file
         string destinationPath =
             $"{destinationFolder}/PowerTrades_{date:yyyyMMdd}_{executionTimeUtc:yyyyMMddHHmm}.csv";
 
         // Export power trades to a CSV file
-        await _csvExportService.ExportAsync(aggregatedPowerTrades, destinationPath);
+        await _performanceLoggingService.LogExecutionTimeAsync(
+            () => _csvExportService.ExportAsync(aggregatedPowerTrades, destinationPath),
+            "ExportPowerTrades"
+        );
     }
 }

@@ -118,6 +118,16 @@ The solution uses **console logging** to provide feedback on the application's e
 - **Warn**: Used when something fails but is recoverable, such as a minor issue that does not stop the execution of the program.
 - **Error**: Used when the task fails completely, causing it to stop.
 
+## Performance measurement
+
+As a potential improvement to the requested service, a performance logging system has been implemented to detect possible bottlenecks at any point in the application's lifecycle.
+
+Performance measurement has been included in the three basic actions of the use case:
+
+- Retrieve data from PowerService
+- Calculate the aggregates
+- Generate the CSV
+
 ## Tests
 
 To run the application, execute the following command in the terminal:

@@ -5,6 +5,7 @@ using AxpoChallenge.Application.Services;
 using AxpoChallenge.Application.UseCases.ExportPowerTrades;
 using AxpoChallenge.Infrastructure.Configuration.CommandLineParser;
 using AxpoChallenge.Infrastructure.Repositories;
+using AxpoChallenge.Infrastructure.Services;
 using AxpoChallenge.Infrastructure.Services.CsvExport;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,6 +19,7 @@ builder.Services.AddSingleton<IPowerTradeRepository, PowerTradeRepository>();
 builder.Services.AddSingleton<ICsvExportService, CsvExportService>();
 builder.Services.AddSingleton<IPowerTradeAggregationService, PowerTradeAggregationService>();
 builder.Services.AddSingleton<IExportPowerTradesUseCase, ExportPowerTradesUseCase>();
+builder.Services.AddSingleton<IPerformanceLoggingService, PerformanceLoggingService>();
 var serviceProvider = builder.Services.BuildServiceProvider();
 
 // Parse command line arguments
