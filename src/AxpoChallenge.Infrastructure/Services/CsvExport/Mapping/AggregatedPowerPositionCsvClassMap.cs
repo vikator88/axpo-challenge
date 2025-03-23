@@ -8,9 +8,7 @@ public class AggregatedPowerPositionCsvClassMap : ClassMap<AggregatedPowerPositi
 {
     public AggregatedPowerPositionCsvClassMap()
     {
-        Map(m => m.DateTimeUtc)
-            .Name("DateTimeUtc")
-            .TypeConverterOption.Format("yyyy-MM-ddTHH:mm:ssZ");
+        Map(m => m.DateTimeUtc).Name("Datetime").TypeConverterOption.Format("yyyy-MM-ddTHH:mm:ssZ");
         Map(m => m.Volume)
             .Name("Volume")
             .TypeConverterOption.CultureInfo(CultureInfo.InvariantCulture);
