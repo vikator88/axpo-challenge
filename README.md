@@ -79,7 +79,7 @@ I also didn't want to miss the opportunity to use some design patterns in the pl
 
 ## Worker Loop Implementation
 
-The worker loop is managed by a background worker that continuously runs in a loop. In each iteration of the loop, a new task is created using `Task.Run()` to execute the use case asynchronously. After the task finishes, the worker sleeps for the specified duration defined in the configuration before running the next iteration.
+The worker loop is managed by a background worker that continuously runs in a loop. In each iteration of the loop, a new task is created using `Task.Run()` to execute the use case asynchronously. After the task is launched in background, the worker sleeps for the specified duration defined in the configuration before running the next iteration and create a new task.
 
 The code itself contains a commented-out implementation of the loop in a blocking execution, where sleep only occurs when the use case has finished.
 
