@@ -1,6 +1,8 @@
 using AxpoChallenge.Infrastructure.Services.CsvExport.Mapping;
 using CsvHelper.Configuration;
 
+namespace AxpoChallenge.Infrastructure.Services.CsvExport.Mapping;
+
 public static class CsvClassMapFactory
 {
     public static ClassMap Create<T>()

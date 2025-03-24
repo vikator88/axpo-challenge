@@ -1,10 +1,9 @@
 using System.Globalization;
 using AxpoChallenge.Application.Services;
-using AxpoChallenge.Domain.Entities;
+using AxpoChallenge.Infrastructure.Services.CsvExport.Mapping;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.Extensions.Logging;
-using Polly;
 
 namespace AxpoChallenge.Infrastructure.Services.CsvExport;
 
