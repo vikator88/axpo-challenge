@@ -148,7 +148,7 @@ Performance measurement has been included in the three basic actions of the use 
 - Calculate the aggregates
 - Generate the CSV
 
-## Tests
+## Testing
 
 To run the tests, execute the following command in the terminal:
 
