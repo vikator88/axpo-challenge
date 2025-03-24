@@ -16,10 +16,10 @@ var builder = Host.CreateApplicationBuilder(args);
 // Dependency Injection
 builder.Services.AddSingleton<ICommandLineParser, CommandLineParser>();
 builder.Services.AddSingleton<IPowerService, PowerService>();
-builder.Services.AddSingleton<IPowerTradeRepository, PowerTradeRepository>();
-builder.Services.AddSingleton<ICsvExportService, CsvExportService>();
+builder.Services.AddTransient<IPowerTradeRepository, PowerTradeRepository>(); // Repository should be transient
+builder.Services.AddTransient<ICsvExportService, CsvExportService>(); // This can write to disk, so it should be transient
 builder.Services.AddSingleton<IPowerTradeAggregationService, PowerTradeAggregationService>();
-builder.Services.AddSingleton<IExportPowerTradesUseCase, ExportPowerTradesUseCase>();
+builder.Services.AddTransient<IExportPowerTradesUseCase, ExportPowerTradesUseCase>(); // Use case should be transient
 builder.Services.AddSingleton<IPerformanceLoggingService, PerformanceLoggingService>();
 builder.Services.AddSingleton<ICommandLineOptionValidator, CommandLineOptionValidator>();
 var serviceProvider = builder.Services.BuildServiceProvider();
