@@ -12,6 +12,12 @@ dotnet build
 dotnet run --project .\src\AxpoChallenge -- [parameter1] [parameter2] ... [parameterN]
 ```
 
+Please, note that to run the application on Linux or Mac, must change the last command for this one (keep in mind the path format):
+
+```bash
+dotnet run --project src/AxpoChallenge -- [parameter1] [parameter2] ... [parameterN]
+```
+
 ### Parameters:
 
 1. **-h, --help**: Shows help for the command
