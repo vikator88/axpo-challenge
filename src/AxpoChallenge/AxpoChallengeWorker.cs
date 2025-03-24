@@ -27,7 +27,10 @@ public class AxpoChallengeWorker : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _logger.LogInformation(
-            $"Worker started. Executing every {_axpoChallengeOptions.ExecutionIntervalMinutes} minutes."
+            String.Format(
+                "Worker started. Executing every {0} minutes.",
+                _axpoChallengeOptions.ExecutionIntervalMinutes
+            )
         );
 
         int iteration = 0;
@@ -54,7 +57,7 @@ public class AxpoChallengeWorker : BackgroundService
             // Option 2: Launch the use case as a background task (non-blocking)
 
             int currentIteration = ++iteration; // Capture the current iteration for use in the currnt task.
-            _logger.LogInformation($"Iteration {currentIteration} started.");
+            _logger.LogInformation(String.Format("Iteration {0} started.", currentIteration));
 
             _ = Task.Run(
                 async () =>
@@ -65,11 +68,16 @@ public class AxpoChallengeWorker : BackgroundService
                             _axpoChallengeOptions.ExecutionDate.AddDays(1), // Execute use case for day-ahead
                             _axpoChallengeOptions.CsvOutputFolder
                         );
-                        _logger.LogInformation($"Iteration {currentIteration} completed."); // use currentIteration instead iteration to ensure the correct value is logged.
+                        _logger.LogInformation(
+                            String.Format("Iteration {0} completed.", currentIteration)
+                        ); // use currentIteration instead iteration to ensure the correct value is logged.
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, $"Error executing iteration {currentIteration}.");
+                        _logger.LogError(
+                            ex,
+                            String.Format("Error executing iteration {0}.", currentIteration)
+                        );
                     }
                 },
                 stoppingToken

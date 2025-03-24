@@ -20,7 +20,7 @@ public class PowerTradeRepository : IPowerTradeRepository
 
     public async Task<IEnumerable<PowerTradeEntity>> GetTradesByDateAsync(DateTime date)
     {
-        _logger.LogInformation($"Getting trades for date: {date:dd/MM/yyyy}");
+        _logger.LogInformation(string.Format("Getting trades for date: {0:dd/MM/yyyy}", date));
         // Retry policy for handling PowerServiceException error implemented with Polly
         // Max 4 retries with exponential backoff: 2, 4, 8, 16 seconds
         var retryPolicy = Policy
@@ -32,7 +32,7 @@ public class PowerTradeRepository : IPowerTradeRepository
                 {
                     _logger.LogWarning(
                         exception,
-                        $"Retry {retryCount} after {timeSpan.Seconds} seconds."
+                        string.Format("Retry {0} after {1} seconds.", retryCount, timeSpan.Seconds)
                     );
                 }
             );

@@ -25,7 +25,11 @@ namespace AxpoChallenge.Infrastructure.Services
                 // If a method throws an exception, the finally block will run before the exception is propagated up the call stack.
                 stopwatch.Stop();
                 _logger.LogInformation(
-                    $"Action {actionName} took {stopwatch.ElapsedMilliseconds}ms"
+                    string.Format(
+                        "Action {0} took {1}ms",
+                        actionName,
+                        stopwatch.ElapsedMilliseconds
+                    )
                 );
             }
         }
@@ -43,7 +47,11 @@ namespace AxpoChallenge.Infrastructure.Services
                 // If a method throws an exception, the finally block will run before the exception is propagated up the call stack.
                 stopwatch.Stop();
                 _logger.LogInformation(
-                    $"Action {actionName} took {stopwatch.ElapsedMilliseconds}ms"
+                    string.Format(
+                        "Action {0} took {1}ms",
+                        actionName,
+                        stopwatch.ElapsedMilliseconds
+                    )
                 );
             }
         }
@@ -61,7 +69,11 @@ namespace AxpoChallenge.Infrastructure.Services
                 // If a method throws an exception, the finally block will run before the exception is propagated up the call stack.
                 stopwatch.Stop();
                 _logger.LogInformation(
-                    $"Action {actionName} took {stopwatch.ElapsedMilliseconds}ms"
+                    string.Format(
+                        "Action {0} took {1}ms",
+                        actionName,
+                        stopwatch.ElapsedMilliseconds
+                    )
                 );
             }
         }
@@ -78,7 +90,11 @@ namespace AxpoChallenge.Infrastructure.Services
                 // If a method throws an exception, the finally block will run before the exception is propagated up the call stack.
                 stopwatch.Stop();
                 _logger.LogInformation(
-                    $"Action {actionName} took {stopwatch.ElapsedMilliseconds}ms"
+                    string.Format(
+                        "Action {0} took {1}ms",
+                        actionName,
+                        stopwatch.ElapsedMilliseconds
+                    )
                 );
             }
         }

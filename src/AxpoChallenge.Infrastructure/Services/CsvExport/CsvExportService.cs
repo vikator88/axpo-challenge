@@ -38,6 +38,6 @@ public class CsvExportService : ICsvExportService
         }
 
         await csv.WriteRecordsAsync(data);
-        _logger.LogInformation($"Data exported to {fullDestinationPath}");
+        _logger.LogInformation(string.Format("Data exported to {0}", fullDestinationPath));
     }
 }
