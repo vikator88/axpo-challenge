@@ -22,11 +22,11 @@ public class PowerTradeRepository : IPowerTradeRepository
     {
         _logger.LogInformation($"Getting trades for date: {date:dd/MM/yyyy}");
         // Retry policy for handling PowerServiceException error implemented with Polly
-        // Max 3 retries with exponential backoff: 2, 4, 8 seconds
+        // Max 4 retries with exponential backoff: 2, 4, 8, 16 seconds
         var retryPolicy = Policy
             .Handle<PowerServiceException>() // Handles the exception thrown by the external service
             .WaitAndRetryAsync(
-                retryCount: 3,
+                retryCount: 4,
                 retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), // Exponential: 2, 4, 8 seconds
                 onRetry: (exception, timeSpan, retryCount, context) => // Log the retry attempts
                 {

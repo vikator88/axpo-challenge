@@ -100,15 +100,17 @@ For this challenge, it won't be a problem because it only uses two resources: an
 
 ## Retry policy
 
-The Polly library has been used to handle retries in case of temporary failures in the PowerService or when saving the CSV to disk (for example, if the disk runs out of space momentarily).
+The Polly library has been used to handle retries in case of temporary failures in the PowerService.
 
-In both cases, an exponential backoff retry policy has been defined. This is useful because it helps to avoid overwhelming the service or disk with immediate repeated requests, providing time for the temporary issue to resolve itself before trying again. The policy attempts up to three retries, at 2, 4, and 8 seconds intervals.
+An exponential backoff retry policy has been defined. This is useful because it helps to avoid overwhelming the service or disk with immediate repeated requests, providing time for the temporary issue to resolve itself before trying again. The policy attempts up to four retries, at 2, 4, 8 and 16 seconds intervals.
 
-If the error persists after these three retries, the execution stops. However, the program continues running because the use case is launched as task without blocking the main loop.
+If the error persists after these three retries, the task handling this iteration stops. However, the program continues running because the use case is launched as task without blocking the main loop.
 
-Once the errors stop occurring, the system will resume normal operation.
+Once the error stop occurring, the system will resume normal operation.
 
-For this challenge, a recovery policy for iterations that do not finish after more than three failures has not been implemented. If a recovery system were required for these tasks, we could create a queue of unfinished tasks with the necessary parameters for their correct execution (for example, saving the DateTime when the task was supposed to run, so the CSV can be generated with the correct name).
+### Potential improvments: recovery policy
+
+For this challenge, a recovery policy for iterations that do not finish after more than four failures has not been implemented. If a recovery system were required for these tasks, we could create a queue of unfinished tasks with the necessary parameters for their correct execution (for example, saving the DateTime when the task was supposed to run, so the CSV can be generated with the correct name).
 
 ## Avoiding daylight saving time issues
 

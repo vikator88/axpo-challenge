@@ -26,36 +26,18 @@ public class CsvExportService : ICsvExportService
             NewLine = Environment.NewLine, // New line character
         };
 
-        var retryPolicy = Policy
-            .Handle<IOException>() // Handle I/O exceptions like file locks, not found, space issues, etc.
-            .Or<UnauthorizedAccessException>() // Handle permission problems
-            .WaitAndRetryAsync(
-                retryCount: 3, // Max 3 retries
-                retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), // Exponential backoff: 2, 4, 8 seconds
-                onRetry: (exception, timeSpan, retryCount, context) =>
-                {
-                    _logger.LogWarning(
-                        exception,
-                        $"Retry {retryCount} after {timeSpan.Seconds} seconds."
-                    );
-                }
-            );
+        using var writer = new StreamWriter(fullDestinationPath);
+        using var csv = new CsvWriter(writer, config);
 
-        await retryPolicy.ExecuteAsync(async () =>
+        // Create a class map for the given type if it exists
+        // If not, the default mapping will be used
+        ClassMap map = CsvClassMapFactory.Create<T>();
+        if (map != null)
         {
-            using var writer = new StreamWriter(fullDestinationPath);
-            using var csv = new CsvWriter(writer, config);
+            csv.Context.RegisterClassMap(map);
+        }
 
-            // Create a class map for the given type if it exists
-            // If not, the default mapping will be used
-            ClassMap map = CsvClassMapFactory.Create<T>();
-            if (map != null)
-            {
-                csv.Context.RegisterClassMap(map);
-            }
-
-            await csv.WriteRecordsAsync(data);
-            _logger.LogInformation($"Data exported to {fullDestinationPath}");
-        });
+        await csv.WriteRecordsAsync(data);
+        _logger.LogInformation($"Data exported to {fullDestinationPath}");
     }
 }
