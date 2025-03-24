@@ -1,11 +1,9 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using AxpoChallenge.Application.Configuration;
 using AxpoChallenge.Application.UseCases.ExportPowerTrades;
-using AxpoChallenge.Infrastructure.Configuration.CommandLineParser;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+
+namespace AxpoChallenge;
 
 public class AxpoChallengeWorker : BackgroundService
 {
