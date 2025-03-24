@@ -62,7 +62,7 @@ public class PowerTradeAggregationServiceUnitTests
         _powerTrades = new List<PowerTradeEntity> { trade1, trade2, trade3, trade4 };
 
         // Define AxpoChallengeOptions to run the service
-        options = new CommandLineOptionsDTOBuilder()
+        options = new CommandLineOptionsBuilder()
             .WithExecutionIntervalMinutes(1)
             .WithExecutionDate(new DateTime(2025, 3, 21))
             .WithCsvOutputFolder(Directory.GetCurrentDirectory())

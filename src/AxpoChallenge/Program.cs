@@ -20,11 +20,12 @@ builder.Services.AddSingleton<ICsvExportService, CsvExportService>();
 builder.Services.AddSingleton<IPowerTradeAggregationService, PowerTradeAggregationService>();
 builder.Services.AddSingleton<IExportPowerTradesUseCase, ExportPowerTradesUseCase>();
 builder.Services.AddSingleton<IPerformanceLoggingService, PerformanceLoggingService>();
+builder.Services.AddSingleton<ICommandLineOptionValidator, CommandLineOptionValidator>();
 var serviceProvider = builder.Services.BuildServiceProvider();
 
 // Parse command line arguments
 ICommandLineParser commandLineParser = serviceProvider.GetRequiredService<ICommandLineParser>();
-CommandLineOptionsDTO commandLineOptions = commandLineParser.Parse(args);
+CommandLineOptions commandLineOptions = commandLineParser.Parse(args);
 
 // Print parsed configuration
 Console.WriteLine("Axpo Coding Challenge!");

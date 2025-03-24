@@ -27,7 +27,7 @@ public class PowerTradeAggregationServiceIntegrationTests
         _powerTradeRepository = new PowerTradeRepository(new PowerService(), logger);
 
         // create test options
-        options = new CommandLineOptionsDTOBuilder()
+        options = new CommandLineOptionsBuilder()
             .WithExecutionIntervalMinutes(1)
             .WithCsvOutputFolder(Directory.GetCurrentDirectory())
             .WithTimeZone("Central European Standard Time")
@@ -138,7 +138,7 @@ public class PowerTradeAggregationServiceIntegrationTests
         /* ARRANGE */
         /***********/
         // Define AxpoChallengeOptions to run the service
-        CommandLineOptionsDTO options = new CommandLineOptionsDTOBuilder()
+        CommandLineOptions options = new CommandLineOptionsBuilder()
             .WithExecutionIntervalMinutes(1)
             .WithCsvOutputFolder(Directory.GetCurrentDirectory())
             .WithTimeZone("Central European Standard Time")

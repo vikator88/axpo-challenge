@@ -15,17 +15,17 @@ namespace AxpoChallenge.Application.Services
         }
 
         public IEnumerable<AggregatedPowerPosition> AggregateTrades(
-            IEnumerable<PowerTradeEntity> powerTrades
+            IEnumerable<PowerTradeEntity> trades
         )
         {
             // Check if all power trades are for the same date
-            if (powerTrades.Select(trade => trade.Date).Distinct().Count() > 1)
+            if (trades.Select(trade => trade.Date).Distinct().Count() > 1)
             {
                 throw new ArgumentException("All power trades must be for the same date.");
             }
 
             // Check if all power trades have the same number of periods
-            if (powerTrades.Select(trade => trade.Periods.Length).Distinct().Count() > 1)
+            if (trades.Select(trade => trade.Periods.Length).Distinct().Count() > 1)
             {
                 throw new ArgumentException(
                     "All power trades must have the same number of periods."
@@ -39,7 +39,7 @@ namespace AxpoChallenge.Application.Services
 
             // Get the local date of the trades
             DateTime localDate = DateTime.SpecifyKind(
-                powerTrades.First().Date,
+                trades.First().Date,
                 DateTimeKind.Unspecified // The date is not UTC. The time zone is setted using the options. Don't trust the server time zone.
             );
 
@@ -53,7 +53,7 @@ namespace AxpoChallenge.Application.Services
 
             var aggregatedPositions = new Dictionary<int, AggregatedPowerPosition>();
 
-            foreach (PowerTradeEntity trade in powerTrades)
+            foreach (PowerTradeEntity trade in trades)
             {
                 foreach (PowerPeriodValueObject period in trade.Periods)
                 {

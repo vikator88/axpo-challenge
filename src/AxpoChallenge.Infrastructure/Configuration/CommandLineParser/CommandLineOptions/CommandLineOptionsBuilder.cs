@@ -1,39 +1,39 @@
 namespace AxpoChallenge.Infrastructure.Configuration.CommandLineParser;
 
-public class CommandLineOptionsDTOBuilder
+public class CommandLineOptionsBuilder
 {
     private int _executionIntervalMinutes;
     private DateTime _executionDate;
     private string _csvOutputFolder;
     private string _timeZone;
 
-    public CommandLineOptionsDTOBuilder WithExecutionIntervalMinutes(int executionIntervalMinutes)
+    public CommandLineOptionsBuilder WithExecutionIntervalMinutes(int executionIntervalMinutes)
     {
         _executionIntervalMinutes = executionIntervalMinutes;
         return this;
     }
 
-    public CommandLineOptionsDTOBuilder WithExecutionDate(DateTime executionDate)
+    public CommandLineOptionsBuilder WithExecutionDate(DateTime executionDate)
     {
         _executionDate = executionDate;
         return this;
     }
 
-    public CommandLineOptionsDTOBuilder WithCsvOutputFolder(string csvOutputFolder)
+    public CommandLineOptionsBuilder WithCsvOutputFolder(string csvOutputFolder)
     {
         _csvOutputFolder = csvOutputFolder;
         return this;
     }
 
-    public CommandLineOptionsDTOBuilder WithTimeZone(string timeZone)
+    public CommandLineOptionsBuilder WithTimeZone(string timeZone)
     {
         _timeZone = timeZone;
         return this;
     }
 
-    public CommandLineOptionsDTO Build()
+    public CommandLineOptions Build()
     {
-        return new CommandLineOptionsDTO(
+        return new CommandLineOptions(
             _executionIntervalMinutes,
             _executionDate,
             _csvOutputFolder,
