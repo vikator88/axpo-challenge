@@ -58,16 +58,16 @@ namespace AxpoChallenge.Application.Services
                 foreach (PowerPeriodValueObject period in trade.Periods)
                 {
                     // Starting from local date 00:00 (but already converted to UTC), each period is 1 hour long.
-                    DateTime currentPeriodDateTimeUtc = dateTimeUtcBase.AddHours(period.Id - 1); // Period Id is 1-based.
+                    DateTime currentPeriodDateTimeUtc = dateTimeUtcBase.AddHours(period.Period - 1); // Period Id is 1-based.
 
-                    if (!aggregatedPositions.ContainsKey(period.Id))
+                    if (!aggregatedPositions.ContainsKey(period.Period))
                     {
-                        aggregatedPositions[period.Id] = new AggregatedPowerPosition(
+                        aggregatedPositions[period.Period] = new AggregatedPowerPosition(
                             currentPeriodDateTimeUtc
                         );
                     }
 
-                    aggregatedPositions[period.Id].AddVolume(period.Volume);
+                    aggregatedPositions[period.Period].AddVolume(period.Volume);
                 }
             }
 
